@@ -21,7 +21,7 @@ class MarkovTextGeneratorApp:
         self._order_entry.grid(row=0, column=1, padx=5, pady=5)
         self._order_entry.insert(tk.END, str(order))
 
-        self._length_label = tk.Label(master, text="Output Length:")
+        self._length_label = tk.Label(master, text="Max Output Length:")
         self._length_label.grid(row=1, column=0, padx=5, pady=5)
         self._length_entry = tk.Entry(master)
         self._length_entry.grid(row=1, column=1, padx=5, pady=5)
