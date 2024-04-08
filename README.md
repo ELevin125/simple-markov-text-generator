@@ -1,6 +1,6 @@
-![image](https://github.com/ELevin125/simple-markov-text-generator/assets/123626350/55771152-9c36-4a75-a026-6ff23a7732e9)
 
 # Markov Text Generator
+![image](https://github.com/ELevin125/simple-markov-text-generator/assets/123626350/55771152-9c36-4a75-a026-6ff23a7732e9)
 
 This is a basic implementation of a Markov Text Generator, which generates new text based on a given input text using Markov chains. The program provides a graphical user interface (GUI) built with Tkinter.
 
