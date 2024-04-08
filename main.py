@@ -1,5 +1,6 @@
 import random
 import tkinter as tk
+from tkinter import filedialog
 
 class MarkovTextGenerator:
     def __init__(self, input_text, order):
@@ -45,6 +46,10 @@ class MarkovTextGeneratorApp:
         self.generator = None
         self.current_order = order
 
+        # default input text
+        with open("./gecko.txt") as f:
+            self.input_text = f.read().replace("\n", " ")
+
         # set up te UI
         self._order_label = tk.Label(master, text="Order:")
         self._order_label.grid(row=0, column=0, padx=5, pady=5)
@@ -58,24 +63,28 @@ class MarkovTextGeneratorApp:
         self._length_entry.grid(row=1, column=1, padx=5, pady=5)
         self._length_entry.insert(tk.END, str(text_length))
 
-        self._generate_button = tk.Button(master, text="Generate", command=self.generate_text)
+        self._upload_button = tk.Button(master, text="Upload File", command=self._upload_file)
+        self._upload_button.grid(row=2, column=0, padx=5, pady=5)
+
+        self._generate_button = tk.Button(master, text="Generate", command=self._generate_text)
         self._generate_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
 
         self.output_text = tk.Text(master, height=10, width=50, state=tk.DISABLED)
         self.output_text.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
 
-    def generate_text(self):
-        input_text = ""
-        with open("./gecko.txt") as f:
-            input_text = f.read().replace("\n", " ")
+    def _upload_file(self):
+        file_path = filedialog.askopenfilename()
+        with open(file_path, "r") as file:
+            self.input_text = file.read().replace("\n", " ")
 
+    def _generate_text(self):
         order = int(self._order_entry.get())
         max_length = int(self._length_entry.get())
 
         # only update the generator if some of values related to the model
         # was changed since the last execution
-        self.generator = MarkovTextGenerator(input_text, order)
+        self.generator = MarkovTextGenerator(self.input_text, order)
         if order != self.current_order:
             self.generator.build_markov_model(order)
 
