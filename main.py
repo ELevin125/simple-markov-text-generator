@@ -47,7 +47,7 @@ class MarkovTextGeneratorApp:
         self.current_order = order
 
         # default input text
-        with open("./gecko.txt") as f:
+        with open("./assets/defaultTrainingData.txt") as f:
             self.input_text = f.read().replace("\n", " ")
 
         # set up te UI
@@ -69,7 +69,7 @@ class MarkovTextGeneratorApp:
         self._generate_button = tk.Button(master, text="Generate", command=self._generate_text)
         self._generate_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
 
-        self.output_text = tk.Text(master, height=10, width=50, state=tk.DISABLED)
+        self.output_text = tk.Text(master, height=10, width=50, state=tk.DISABLED, wrap=tk.WORD)
         self.output_text.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
 
