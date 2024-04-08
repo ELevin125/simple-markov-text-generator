@@ -63,7 +63,7 @@ class MarkovTextGeneratorApp:
         self._length_entry.grid(row=1, column=1, padx=5, pady=5)
         self._length_entry.insert(tk.END, str(text_length))
 
-        self._upload_button = tk.Button(master, text="Upload File", command=self._upload_file)
+        self._upload_button = tk.Button(master, text="Upload .txt File", command=self._upload_file)
         self._upload_button.grid(row=2, column=0, padx=5, pady=5)
 
         self._generate_button = tk.Button(master, text="Generate", command=self._generate_text)
@@ -74,9 +74,17 @@ class MarkovTextGeneratorApp:
 
 
     def _upload_file(self):
+        # only allow .txt files
         file_path = filedialog.askopenfilename()
-        with open(file_path, "r") as file:
-            self.input_text = file.read().replace("\n", " ")
+        if file_path.endswith(".txt"):
+            with open(file_path, "r") as file:
+                self.input_text = file.read().replace("\n", " ")
+        else:
+            self.output_text.config(state=tk.NORMAL)
+            self.output_text.delete("1.0", tk.END)
+            self.output_text.insert(tk.END, "Invalid input file. Using last known input file instead.", "red")
+            self.output_text.tag_configure("red", foreground="red")
+            self.output_text.config(state=tk.DISABLED)
 
     def _generate_text(self):
         order = int(self._order_entry.get())
