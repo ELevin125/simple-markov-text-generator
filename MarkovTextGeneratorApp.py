@@ -33,8 +33,14 @@ class MarkovTextGeneratorApp:
         self._generate_button = tk.Button(master, text="Generate", command=self._generate_text)
         self._generate_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
 
+        self.start_with_capital_var = tk.BooleanVar()
+        self.start_with_capital_var.set(True)
+        self._start_with_capital_checkbox = tk.Checkbutton(master, text="Start with Capital", variable=self.start_with_capital_var)
+        self._start_with_capital_checkbox.grid(row=2, column=1, columnspan=2, padx=5, pady=5)
+
+
         self.output_text = tk.Text(master, height=10, width=50, state=tk.DISABLED, wrap=tk.WORD)
-        self.output_text.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+        self.output_text.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
 
 
     def _upload_file(self):
@@ -53,6 +59,7 @@ class MarkovTextGeneratorApp:
     def _generate_text(self):
         order = int(self._order_entry.get())
         max_length = int(self._length_entry.get())
+        start_with_capital = self.start_with_capital_var.get()
 
         # only update the generator if some of values related to the model
         # was changed since the last execution
@@ -60,7 +67,7 @@ class MarkovTextGeneratorApp:
         if order != self.current_order:
             self.generator.build_markov_model(order)
 
-        output_phrase = self.generator.generate_text(order, max_length)
+        output_phrase = self.generator.generate_text(order, max_length, start_with_capital)
 
         self.output_text.config(state=tk.NORMAL)
         self.output_text.delete("1.0", tk.END)
